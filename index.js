@@ -155,7 +155,7 @@ function createReadMe(data){
     }
 
     if(badge){
-        let badgeLine = ',\n' + badge + ',\n';
+        let badgeLine = '\n' + badge + '\n';
         fs.appendFile('README.md',badgeLine,function(err){
             if(err){
               return console.log(err);
