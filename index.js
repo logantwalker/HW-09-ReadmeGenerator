@@ -5,7 +5,7 @@ const inquirer = require("inquirer");
 const fs = require('fs');
 
 //license information 
-const MIT = {
+const mit = {
     copyright: 'Copyright (c) <year> <copyright holders>',
     permission: 'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:',
     conditions: 'The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.',
@@ -31,7 +31,7 @@ const gpl3 = {
         "The precise terms and conditions for copying, distribution and modification follow."
     ],
     terms: 'https://www.gnu.org/licenses/gpl-3.0.md',
-    badge: ''
+    badge: '[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)'
 }
 
 const apache2 = {
@@ -39,7 +39,7 @@ const apache2 = {
     text: 'Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at',
     link: 'http://www.apache.org/licenses/LICENSE-2.0',
     warranty: 'Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied See the License for the specific language governing permissions an limitations under the License.',
-    badge: ''
+    badge: '[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)'
 }
 
 const bsd2 = {
@@ -50,7 +50,7 @@ const bsd2 = {
         '2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.'
     ],
     warranty: 'THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.',
-    badge: ''
+    badge: '[![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)'
 }
 
 const bsd3 = {
@@ -62,7 +62,7 @@ const bsd3 = {
         '3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.'
     ],
     warranty:'THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.',
-    badge: ''
+    badge: '[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)'
 }
 
 
@@ -126,6 +126,9 @@ inquirer
         
     }).catch((error)=>{console.log(error)});
 
+
+// create readme //
+
 function createReadMe(data){
     //generate README.md with project title//
     fs.writeFile('README.md', `# ${data.title}`,function(err){
@@ -133,6 +136,53 @@ function createReadMe(data){
             return console.log(err);
         }
     });
+    let badge;
+    //add license badge
+    if(data.license === 'MIT'){
+        badge = mit.badge;
+    }
+    else if(data.license === 'gpl-3.0'){
+        badge = gpl3.badge;
+    }
+    else if(data.license === 'apache-2.0'){
+        badge = apache2.badge;
+    }
+    else if(data.license === 'bsd-2-clause'){
+        badge = bsd2.badge;
+    }
+    else if(data.license === 'bsd-2-clause'){
+        badge = bsd3.badge;
+    }
+
+    if(badge){
+        let badgeLine = ',\n' + badge + ',\n';
+        fs.appendFile('README.md',badgeLine,function(err){
+            if(err){
+              return console.log(err);
+            }
+        })
+    }
+    
+    //create project description
 
 
+    //create table of contents
+
+
+    //create installation info
+
+
+    //usage info
+
+
+    //add license info
+
+
+    //contribution info
+
+
+    //tests
+
+
+    //questions
 }
