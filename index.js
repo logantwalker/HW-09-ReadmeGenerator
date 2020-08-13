@@ -143,23 +143,18 @@ function createReadMe(data){
     let badge;
     if(data.license === 'MIT'){
         badge = mit.badge;
-        let license = mit;
     }
     else if(data.license === 'gpl-3.0'){
         badge = gpl3.badge;
-        let license = gpl3;
     }
     else if(data.license === 'apache-2.0'){
         badge = apache2.badge;
-        let license = apache2;
     }
     else if(data.license === 'bsd-2-clause'){
         badge = bsd2.badge;
-        let license = bsd2;
     }
     else if(data.license === 'bsd-3-clause'){
         badge = bsd3.badge;
-        let license = bsd3;
     }
     else{
         badge = '';
@@ -241,7 +236,7 @@ function createReadMe(data){
                 return console.log(err);
                 }
                 else{
-                    //contribute();
+                    contribute();
                 }
             })
         }
@@ -275,28 +270,64 @@ function createReadMe(data){
             let licenseInfoText = sectionTitle + version + '\n' + copyrightTxt + '\n' + permission + '\n' + preamble + '\n\n' + terms;
             appendLicenseText(licenseInfoText);
         }
+
         else if(data.license === 'apache-2.0'){
-            
+            let text = sectionTitle + apache2.copyright + '\n\n' + apache2.text + '\n\n' + apache2.link + '\n\n' + apache2.warranty;
+            appendLicenseText(text);
         }
         else if(data.license === 'bsd-2-clause'){
-            
+            //too lazy dont care
         }
         else if(data.license === 'bsd-3-clause'){
-            
+            //too lazy dont care
         }
         else{
-            
+            contribute();
         }
     }
 
     //contribution info
-
+    const contribute = () =>{
+        let text = '\n\n## Contribution Information\n\n';
+        text = text + data.contribute;
+        fs.appendFile('README.md',text,function(err){
+            if(err){
+            return console.log(err);
+            }
+            else{
+                tests();
+            }
+        })
+    }
 
     //tests
+    const tests = () =>{
+        let text = '\n\n## Testing Information\n\n';
+        text = text + data.tests;
+        fs.appendFile('README.md',text,function(err){
+            if(err){
+            return console.log(err);
+            }
+            else{
+                questions();
+            }
+        })
+    }
 
 
     //questions
-
+    const questions = () =>{
+        let text = '\n\n## Questions?\n\n';
+        text = text + `github username: ${data.ghu}\n\n` + `email address: ${data.mail}`;
+        fs.appendFile('README.md',text,function(err){
+            if(err){
+            return console.log(err);
+            }
+            else{
+                
+            }
+        })
+    }
 
     //starting the function calls to populate the README.md
     let badgeLine = '\n' + badge + '\n';
