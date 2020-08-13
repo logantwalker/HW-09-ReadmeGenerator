@@ -127,17 +127,20 @@ inquirer
     }).catch((error)=>{console.log(error)});
 
 
-// create readme //
 
+
+// create readme //
 function createReadMe(data){
+    
     //generate README.md with project title//
-    fs.writeFile('README.md', `# ${data.title}`,function(err){
+    fs.writeFile('README.md', `# ${data.title} \n`,function(err){
         if (err) {
             return console.log(err);
         }
     });
-    let badge;
+    
     //add license badge
+    let badge;
     if(data.license === 'MIT'){
         badge = mit.badge;
     }
@@ -153,21 +156,41 @@ function createReadMe(data){
     else if(data.license === 'bsd-2-clause'){
         badge = bsd3.badge;
     }
-
-    if(badge){
-        let badgeLine = '\n' + badge + '\n';
-        fs.appendFile('README.md',badgeLine,function(err){
-            if(err){
-              return console.log(err);
-            }
-        })
+    else{
+        badge = '';
     }
-    
-    //create project description
 
+    //create project description
+    const description = ()=>{
+        let descLine = '\n' + '## Description'+ '\n' + data.description + '\n';
+        if(data.description){
+            fs.appendFile('README.md',descLine,function(err){
+                if(err){
+                return console.log(err);
+                }
+                else{
+                    toc()
+                }
+            })
+        }
+    }
 
     //create table of contents
+    const toc = () =>{
+        if(data.toc){
+            let tocItems = data.toc.split(', ');
+            let tocTitle = '\n ## Table of Contents'
+            fs.appendFile('README.md',tocTitle,function(err){
+                if(err){
+                  return console.log(err);
+                }
+                else{
 
+                }
+            })
+        }
+    }
+    
 
     //create installation info
 
@@ -185,4 +208,16 @@ function createReadMe(data){
 
 
     //questions
+
+
+    //starting the function calls to populate the README.md
+    let badgeLine = '\n' + badge + '\n';
+    fs.appendFile('README.md',badgeLine,function(err){
+        if(err){
+            return console.log(err);
+        }
+        else{
+            description()
+        }
+    })
 }
