@@ -35,7 +35,7 @@ const gpl3 = {
 }
 
 const apache2 = {
-    copyright: 'Copyright [yyyy] [name of copyright owner]',
+    copyright: 'Copyright <yyyy> <name of copyright owner>',
     text: 'Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at',
     link: 'http://www.apache.org/licenses/LICENSE-2.0',
     warranty: 'Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied See the License for the specific language governing permissions an limitations under the License.',
@@ -131,7 +131,7 @@ inquirer
 
 // create readme //
 function createReadMe(data){
-    
+
     //generate README.md with project title//
     fs.writeFile('README.md', `# ${data.title} \n`,function(err){
         if (err) {
@@ -143,26 +143,31 @@ function createReadMe(data){
     let badge;
     if(data.license === 'MIT'){
         badge = mit.badge;
+        let license = mit;
     }
     else if(data.license === 'gpl-3.0'){
         badge = gpl3.badge;
+        let license = gpl3;
     }
     else if(data.license === 'apache-2.0'){
         badge = apache2.badge;
+        let license = apache2;
     }
     else if(data.license === 'bsd-2-clause'){
         badge = bsd2.badge;
+        let license = bsd2;
     }
-    else if(data.license === 'bsd-2-clause'){
+    else if(data.license === 'bsd-3-clause'){
         badge = bsd3.badge;
+        let license = bsd3;
     }
     else{
         badge = '';
     }
 
     //create project description
-    const description = ()=>{
-        let descLine = '\n' + '## Description'+ '\n' + data.description + '\n';
+    const description = () =>{
+        let descLine = '\n' + '## Description'+ '\n\n' + data.description + '\n';
         if(data.description){
             fs.appendFile('README.md',descLine,function(err){
                 if(err){
@@ -179,27 +184,99 @@ function createReadMe(data){
     const toc = () =>{
         if(data.toc){
             let tocItems = data.toc.split(', ');
-            let tocTitle = '\n ## Table of Contents'
-            fs.appendFile('README.md',tocTitle,function(err){
+            let tocTitle = '\n## Table of Contents\n';
+            let tocItemsTxt = '';
+
+            for(const i in tocItems){
+                tocItemsTxt = tocItemsTxt + `\n${i}. ${tocItems[i]}`;
+            }
+            let sectionContent = tocTitle + tocItemsTxt;
+
+            fs.appendFile('README.md',sectionContent,function(err){
                 if(err){
-                  return console.log(err);
+                return console.log(err);
                 }
                 else{
-
+                    installInfo();
                 }
             })
+
         }
     }
     
 
     //create installation info
-
+    const installInfo = () =>{
+        let sectionContent = '\n\n## Installation Instructions\n\n'+data.inst;
+        fs.appendFile('README.md',sectionContent,function(err){
+            if(err){
+            return console.log(err);
+            }
+            else{
+                usage();
+            }
+        })
+    }
 
     //usage info
-
+    const usage = () =>{
+        let sectionContent = '\n\n## Usage Information\n\n'+data.use;
+        fs.appendFile('README.md',sectionContent,function(err){
+            if(err){
+            return console.log(err);
+            }
+            else{
+                licenseInfo();
+            }
+        })
+    }
 
     //add license info
+    const licenseInfo = () =>{
+        let sectionTitle = '\n\n## License Information\n\n';
 
+        const appendLicenseText = (text) =>{
+            fs.appendFile('README.md',text,function(err){
+                if(err){
+                return console.log(err);
+                }
+                else{
+                    //contribute();
+                }
+            })
+        }
+
+        if(data.license === 'MIT'){
+           let copyrightTxt = mit.copyright.split('<');
+           copyrightTxt = copyrightTxt[0];
+           let copyrightHolder = data.ghu;
+           let copyrightYear = new Date().getFullYear();
+           copyrightTxt = sectionTitle + copyrightTxt + ` <${copyrightYear}> <${copyrightHolder}>\n\n`;
+           
+           let permissionTxt = mit.permission;
+           let conditionsTxt = mit.conditions;
+           let warrantyTxt = mit.warranty;
+
+           let licenseInfoText = copyrightTxt + permissionTxt + '\n\n' + conditionsTxt + '\n\n' + warrantyTxt;
+
+           appendLicenseText(licenseInfoText);
+        }
+        else if(data.license === 'gpl-3.0'){
+            
+        }
+        else if(data.license === 'apache-2.0'){
+            
+        }
+        else if(data.license === 'bsd-2-clause'){
+            
+        }
+        else if(data.license === 'bsd-3-clause'){
+            
+        }
+        else{
+            
+        }
+    }
 
     //contribution info
 
