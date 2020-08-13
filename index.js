@@ -251,7 +251,7 @@ function createReadMe(data){
            copyrightTxt = copyrightTxt[0];
            let copyrightHolder = data.ghu;
            let copyrightYear = new Date().getFullYear();
-           copyrightTxt = sectionTitle + copyrightTxt + ` <${copyrightYear}> <${copyrightHolder}>\n\n`;
+           copyrightTxt = sectionTitle + copyrightTxt + ` <${copyrightYear}> <'${copyrightHolder}'>\n\n`;
            
            let permissionTxt = mit.permission;
            let conditionsTxt = mit.conditions;
@@ -261,8 +261,19 @@ function createReadMe(data){
 
            appendLicenseText(licenseInfoText);
         }
+
         else if(data.license === 'gpl-3.0'){
-            
+            let version = gpl3.version;
+            let copyrightTxt = gpl3.copyright;
+            let permission = gpl3.permission;
+            let preamble = '';
+            for(const i in gpl3.preamble){
+                preamble = preamble + `\n${gpl3.preamble[i]}`
+            }
+            let terms = gpl3.terms
+
+            let licenseInfoText = sectionTitle + version + '\n' + copyrightTxt + '\n' + permission + '\n' + preamble + '\n\n' + terms;
+            appendLicenseText(licenseInfoText);
         }
         else if(data.license === 'apache-2.0'){
             
