@@ -183,7 +183,7 @@ function createReadMe(data){
             let tocItemsTxt = '';
 
             for(const i in tocItems){
-                tocItemsTxt = tocItemsTxt + `\n${i}. ${tocItems[i]}`;
+                tocItemsTxt = tocItemsTxt + `\n${i}. [${tocItems[i]}](#${tocItems[i]})`;
             }
             let sectionContent = tocTitle + tocItemsTxt;
 
@@ -192,11 +192,30 @@ function createReadMe(data){
                 return console.log(err);
                 }
                 else{
-                    installInfo();
+                    tocSections();
                 }
-            })
+            });
 
         }
+    }
+    const tocSections = () =>{
+        if(data.toc){
+            let tocItems = data.toc.split(', ');
+            let tocItemsTxt = '';
+            for(const i in tocItems){
+                tocItemsTxt = tocItemsTxt + `\n## ${tocItems[i]}\n`;
+            }
+            let sectionContent = tocItemsTxt;
+            fs.appendFile('README.md',sectionContent,function(err){
+                if(err){
+                return console.log(err);
+                }
+                else{
+                    installInfo();
+                }
+            });
+        }
+        
     }
     
 
@@ -318,7 +337,7 @@ function createReadMe(data){
     //questions
     const questions = () =>{
         let text = '\n\n## Questions?\n\n';
-        text = text + `github username: ${data.ghu}\n\n` + `email address: ${data.mail}`;
+        text = text + `github username: [${data.ghu}](www.github.com/${data.ghu})\n\n` + `email address: ${data.mail}`;
         fs.appendFile('README.md',text,function(err){
             if(err){
             return console.log(err);
