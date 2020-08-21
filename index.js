@@ -337,7 +337,7 @@ function createReadMe(data){
     //questions
     const questions = () =>{
         let text = '\n\n## Questions?\n\n';
-        text = text + `github username: [${data.ghu}](www.github.com/${data.ghu})\n\n` + `email address: ${data.mail}`;
+        text = text + `github username: [${data.ghu}](https://www.github.com/${data.ghu})\n\n` + `email address: ${data.mail}`;
         fs.appendFile('README.md',text,function(err){
             if(err){
             return console.log(err);

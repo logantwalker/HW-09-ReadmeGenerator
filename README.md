@@ -45,6 +45,6 @@ test
 
 ## Questions?
 
-github username: [logantwalker](www.github.com/logantwalker)
+github username: [logantwalker](https://www.github.com/logantwalker)
 
 email address: logantwalker95@gmail.com
